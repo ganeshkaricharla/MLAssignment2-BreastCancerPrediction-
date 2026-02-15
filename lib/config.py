@@ -10,3 +10,7 @@ DATASET_PATH = os.path.join(PROJECT_ROOT, "data", "wdbc.data")
 # Model hyperparameters
 LR_MAX_ITERATION = 2000
 RANDOM_STATE = 42
+
+DT_MAX_DEPTH=None
+DT_MIN_SAMPLE_SPLIT=2
+DT_MIN_SAMPLE_LEAF=1
