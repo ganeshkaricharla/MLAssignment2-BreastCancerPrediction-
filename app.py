@@ -42,7 +42,7 @@ def load_and_train(model_name):
     model_obj.train()
     return model_obj
 
-with st.spinner(f"Training {selected_model}..")
+with st.spinner(f"Training {selected_model}.."):
     model = load_and_train(selected_model)
 
 if uploaded_file is not None:
@@ -52,6 +52,8 @@ if uploaded_file is not None:
         st.stop()
     y_test = test_df[TARGET_FIELD]
     X_test = test_df.drop(columns=[TARGET_FIELD])
+    if hasattr(model, 'scaler'):
+        X_test = model.scaler.transform(X_test)
     if selected_model == 'XGBoost':
         y_pred_encoded = model.model.predict(X_test)
         y_pred_proba = model.model.predict_proba(X_test)[:,1]
@@ -85,7 +87,7 @@ with col1:
     ax.set_xlabel("Predicted")
     ax.set_ylabel("Actual")
     ax.set_title(f"{selected_model} - Confusion Matrix")
-    ax.pyplot(fig)
+    st.pyplot(fig)
 with col2:
     st.subheader("Classification Report")
     report = get_classification_report(y_test, y_pred)
