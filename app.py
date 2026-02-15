@@ -65,7 +65,7 @@ if uploaded_file is not None:
 else:
     y_test = model.y_test
     y_pred, y_pred_proba = model.predict()
-    st.info("Using Test data from train-test split")
+    st.info("Using Test data from train-test split since no CSV Uploaded")
 
 st.header(f"Evaluation Metrics - {selected_model}")
 metrics = calculate_all_metrics(y_test, y_pred, y_pred_proba,pos_label=POS_LABEL)
