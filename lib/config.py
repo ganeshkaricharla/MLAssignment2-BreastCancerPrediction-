@@ -1,16 +1,28 @@
 import os
 
-# Get the project root directory (parent of lib folder)
 PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Data paths relative to project root
 TEST_FILE_PATH = os.path.join(PROJECT_ROOT, "data", "test_data.csv")
 DATASET_PATH = os.path.join(PROJECT_ROOT, "data", "wdbc.data")
 
-# Model hyperparameters
 LR_MAX_ITERATION = 2000
 RANDOM_STATE = 42
 
 DT_MAX_DEPTH=None
 DT_MIN_SAMPLE_SPLIT=2
 DT_MIN_SAMPLE_LEAF=1
+
+KNN_N_NEIGHBORS = 5
+KNN_WEIGHTS = 'uniform'
+KNN_METRIC = 'minkowski'
+
+NB_VAR_SMOOTHING = 1e-9
+
+RF_N_ESTIMATORS = 100
+RF_MAX_DEPTH = None
+RF_MIN_SAMPLES_SPLIT = 2
+RF_MIN_SAMPLES_LEAF = 1
+
+XGB_N_ESTIMATORS = 100
+XGB_MAX_DEPTH = 3
+XGB_LEARNING_RATE = 0.1
+XGB_SUBSAMPLE = 1.0
