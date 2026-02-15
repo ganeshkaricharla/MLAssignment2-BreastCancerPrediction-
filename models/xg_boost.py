@@ -9,7 +9,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'lib'))
 
 from xgboost import XGBClassifier
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder, StandardScaler
 import joblib
 from data_utils import load_data_and_save_test
 from metrics import calculate_all_metrics, display_metrics, get_confusion_matrix, get_classification_report
@@ -20,6 +20,7 @@ class XGBoostModel():
 
     def __init__(self):
         self.X_train, self.X_test, self.y_train, self.y_test = load_data_and_save_test()
+        self.scaler = StandardScaler()
         self.label_encoder = LabelEncoder()
         self.y_train_encoded = self.label_encoder.fit_transform(self.y_train)
         self.y_test_encoded = self.label_encoder.transform(self.y_test)
@@ -33,6 +34,8 @@ class XGBoostModel():
         )
 
     def train(self):
+        self.X_train = self.scaler.fit_transform(self.X_train)
+        self.X_test = self.scaler.transform(self.X_test)
         self.model.fit(self.X_train, self.y_train_encoded)
         
     def predict(self):

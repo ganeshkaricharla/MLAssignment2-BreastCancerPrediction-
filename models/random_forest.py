@@ -9,6 +9,7 @@ import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'lib'))
 
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import StandardScaler
 import joblib
 from data_utils import load_data_and_save_test
 from metrics import calculate_all_metrics, display_metrics, get_confusion_matrix, get_classification_report
@@ -19,6 +20,7 @@ class RandomForestModel():
 
     def __init__(self):
         self.X_train, self.X_test, self.y_train, self.y_test = load_data_and_save_test()
+        self.scaler = StandardScaler()
         self.model = RandomForestClassifier(
             n_estimators=RF_N_ESTIMATORS,
             max_depth=RF_MAX_DEPTH,
@@ -28,8 +30,10 @@ class RandomForestModel():
             )
 
     def train(self):
+        self.X_train = self.scaler.fit_transform(self.X_train)
+        self.X_test = self.scaler.transform(self.X_test)
         self.model.fit(self.X_train, self.y_train)
-        
+
     def predict(self):
         y_pred = self.model.predict(self.X_test)
         y_pred_proba = self.model.predict_proba(self.X_test)[:,1]
